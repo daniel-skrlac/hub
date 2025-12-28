@@ -1,6 +1,7 @@
-package com.hub.mongo.documents;
+package com.hub.mongo.model;
 
 import java.time.Instant;
+import java.util.List;
 
 import io.quarkus.mongodb.panache.PanacheMongoEntity;
 import io.quarkus.mongodb.panache.common.MongoEntity;
@@ -13,5 +14,5 @@ import lombok.Setter;
 public class Form extends PanacheMongoEntity {
     private String user;
     private Instant createdAt;
-    // private
+    private List<FormComponent> components;
 }

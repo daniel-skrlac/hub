@@ -1,7 +1,7 @@
 package com.hub.mongo.service;
 
-import com.hub.mongo.documents.FormResponse;
 import com.hub.mongo.dto.FormResponseDto;
+import com.hub.mongo.mapper.FormResponseMapper;
 import com.hub.mongo.repository.FormResponseRepository;
 
 import jakarta.enterprise.context.ApplicationScoped;
@@ -14,13 +14,14 @@ import lombok.RequiredArgsConstructor;
 public class FormResponseService {
 
     final FormResponseRepository repository;
+    final FormResponseMapper mapper;
 
     @Transactional
-    public void persist(FormResponse formResponse) {
-        repository.persist(formResponse);
+    public void persist(FormResponseDto formResponseDto) {
+        repository.persist(mapper.toEntity(formResponseDto));
     }
 
-    public FormResponseDto getFormResponse(String user) {
+    public FormResponseDto find(String user) {
         return repository.find("user = ?1 ", user)
                 .project(FormResponseDto.class)
                 .firstResultOptional()

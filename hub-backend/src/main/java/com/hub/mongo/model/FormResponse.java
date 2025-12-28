@@ -1,4 +1,4 @@
-package com.hub.mongo.documents;
+package com.hub.mongo.model;
 
 import java.time.Instant;
 import java.util.Map;
