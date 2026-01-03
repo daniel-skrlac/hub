@@ -10,7 +10,8 @@ import lombok.Data;
 public class FormComponent {
     public enum HtmlElement {
         TEXTAREA("textarea"),
-        SELECT("select");
+        SELECT("select"),
+        RADIO("radio");
 
         private String name;
 
