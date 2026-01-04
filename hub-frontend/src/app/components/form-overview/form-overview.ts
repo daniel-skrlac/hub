@@ -1,11 +1,11 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { FormDto } from '../models/model';
-import { FormDataService } from '../services/form-data-service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { FormRenderer } from '../form-renderer/form-renderer';
+import { FormDataService } from '../../services/form-data-service';
+import { FormDto } from '../../models/model';
 
 @Component({
   selector: 'app-form-overview',
@@ -27,6 +27,10 @@ export class FormOverview implements OnInit {
   }
 
   openDialog(form: FormDto) {
-    this.dialog.open(FormRenderer, { data: form });
+    this.dialog.open(FormRenderer, {
+      width: '90vw',
+      maxWidth: '90vw',
+      data: form,
+    });
   }
 }

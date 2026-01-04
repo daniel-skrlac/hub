@@ -10,6 +10,7 @@ import com.hub.mongo.mapper.FormMapper;
 import com.hub.mongo.repository.FormRepository;
 
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.ws.rs.NotFoundException;
 import lombok.RequiredArgsConstructor;
 
 @ApplicationScoped
@@ -29,6 +30,10 @@ public class FormService {
 
     public Optional<FormDto> find(ObjectId id) {
         return repository.findByIdOptionalDto(id);
+    }
+
+    public FormDto findById(String id) {
+        return find(new ObjectId(id)).orElseThrow(() -> new NotFoundException("Form with id %s does not exist"));
     }
 
 }

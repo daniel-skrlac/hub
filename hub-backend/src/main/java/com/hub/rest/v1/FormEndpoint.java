@@ -15,7 +15,7 @@ import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
 import lombok.RequiredArgsConstructor;
 
-@Path("/v1/form")
+@Path("/v1/forms")
 @RequiredArgsConstructor
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
@@ -33,9 +33,17 @@ public class FormEndpoint {
 
     @GET
     @Path("/{user}")
-    public Response createForm(@PathParam("user") String user) {
+    public Response getFormByUser(@PathParam("user") String user) {
         return Response.ok()
                 .entity(service.findUsersForms(user))
+                .build();
+    }
+
+    @GET
+    @Path("/{id}")
+    public Response getFormById(@PathParam("id") String id) {
+        return Response.ok()
+                .entity(service.findById(id))
                 .build();
     }
 }
