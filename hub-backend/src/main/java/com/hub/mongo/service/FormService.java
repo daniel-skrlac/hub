@@ -25,8 +25,7 @@ public class FormService {
     }
 
     public List<FormDto> findUsersForms(String user) {
-        List<FormDto> usersForms = repository.findUsersForms(user);
-        return usersForms;
+        return repository.findUsersForms(user);
     }
 
     public Optional<FormDto> find(ObjectId id) {

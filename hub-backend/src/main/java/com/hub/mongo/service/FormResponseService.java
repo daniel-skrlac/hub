@@ -23,7 +23,7 @@ public class FormResponseService {
 
     @Transactional
     public void persist(FormResponseDto formResponseDto) {
-        formService.find(formResponseDto.getFormId()).orElseThrow(() -> new NotFoundException());
+        formService.find(formResponseDto.getFormId()).orElseThrow(NotFoundException::new);
         repository.persist(mapper.toEntity(formResponseDto));
     }
 
