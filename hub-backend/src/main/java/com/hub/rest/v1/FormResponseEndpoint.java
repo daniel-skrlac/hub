@@ -1,7 +1,5 @@
 package com.hub.rest.v1;
 
-import org.bson.types.ObjectId;
-
 import com.hub.mongo.dto.FormResponseDto;
 import com.hub.mongo.service.FormResponseService;
 
@@ -28,12 +26,12 @@ public class FormResponseEndpoint {
 
     @POST
     public Response createFormResponse(@Valid FormResponseDto formResponseDto) {
-        service.persist(formResponseDto);
+        service.save(formResponseDto);
         return Response.ok().build();
     }
 
     @GET
-    public Response getFormResponse(@QueryParam("user") String user, @QueryParam("formId") ObjectId formId) {
+    public Response getFormResponse(@QueryParam("user") String user, @QueryParam("formId") String formId) {
         return Response.ok()
                 .entity(service.findUserResponses(user, formId))
                 .build();
