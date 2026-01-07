@@ -5,6 +5,7 @@ import {
   FormGroup,
   NonNullableFormBuilder,
   ReactiveFormsModule,
+  Validators,
 } from '@angular/forms';
 import { MatOption } from '@angular/material/autocomplete';
 import { MatButton } from '@angular/material/button';
@@ -99,8 +100,21 @@ export class FormRenderer {
   renderFormAsObject(form: FormDto) {
     let result: DynamicForm = {};
     form.components?.forEach((it) => {
-      result[it.name] = new FormControl('');
+      result[it.name] = new FormControl('', Validators.required);
     });
     return result;
+  }
+
+  isFormValid(): boolean {
+    return this.formPreview.status === 'VALID';
+  }
+
+  getValidationErrorMessage(name: string): string {
+    let invalid =
+      this.formPreview.controls.components.controls[name].hasError('required');
+    if (invalid) {
+      return 'This field is required';
+    }
+    return '';
   }
 }

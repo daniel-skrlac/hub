@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-// Generated using typescript-generator version 3.2.1263 on 2026-01-07 13:08:20.
+// Generated using typescript-generator version 3.2.1263 on 2026-01-07 16:20:55.
 
 export interface FormDto {
     id: string;
