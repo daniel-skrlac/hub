@@ -14,6 +14,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelect } from '@angular/material/select';
 import { ActivatedRoute } from '@angular/router';
 import { FormComponent, FormDto } from '../../models/model';
+import { FormResponseDataService } from '../../services/form-response-data-service';
+import { FormResponse } from '../../models/form-response.model';
 
 interface DynamicForm {
   [key: string]: FormControl<string | null>;
@@ -21,6 +23,12 @@ interface DynamicForm {
 
 interface Form {
   components: FormGroup<DynamicForm>;
+}
+
+interface FormSubmitResponse {
+  formId: string;
+  user: string;
+  userFormResponse: { [key: string]: any };
 }
 
 @Component({
@@ -40,26 +48,40 @@ interface Form {
 export class FormRenderer {
   private activatedRoute = inject(ActivatedRoute);
 
-  private dialogData = inject(MAT_DIALOG_DATA, { optional: true });
+  private dialogData: FormDto = inject(MAT_DIALOG_DATA, { optional: true });
   private routerData = toSignal(this.activatedRoute.data);
 
   private form = signal({} as FormDto);
   private fb = inject(NonNullableFormBuilder);
+  private formResponseDataService: FormResponseDataService = inject(
+    FormResponseDataService,
+  );
 
   formPreview: FormGroup<Form> = this.fb.group({} as Form);
   formComponents: FormComponent[] = [];
 
   constructor() {
     if (this.dialogData) {
-      this.form.set(this.dialogData);
-      this.setupForm(this.form());
+      this.setupForm(this.dialogData);
     } else {
       this.setupForm(this.routerData()?.['form']);
     }
   }
 
   onSubmit() {
-    console.log(this.formPreview.value);
+    this.formResponseDataService
+      .createFormResponse(new FormResponse(this.createFormSubmitResponse()))
+      .subscribe((res) => console.log(res.status));
+  }
+
+  private createFormSubmitResponse(): FormSubmitResponse {
+    return {
+      formId: this.form().id,
+      user: 'string',
+      userFormResponse: this.formPreview.value.components as {
+        [key: string]: any;
+      },
+    };
   }
 
   private setupForm(form: FormDto): void {

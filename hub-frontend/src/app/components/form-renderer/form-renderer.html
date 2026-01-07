@@ -4,7 +4,7 @@
       <mat-form-field>
         <mat-label>{{ c.label + ":" }}</mat-label>
         @if (c.type === "select") {
-          <mat-select id="c.name">
+          <mat-select id="c.name" [formControlName]="c.name">
             @for (v of c.values; track v) {
               <mat-option [value]="v">{{ v }}</mat-option>
             }
